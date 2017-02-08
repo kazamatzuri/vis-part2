@@ -6,7 +6,7 @@ Since we're might want to use our generated graphs in reports or on a webpage, w
 # Loading windows perfmon data
 
 The perfmon data extracted from standard pbuttons report is a bit of a peculiar data format. On first glance it is a pretty straightforward csv file. The first row contains the column headers, subsequent rows the datapoints.
-However, for our porposes we will have to do something about the quotes surrounding the value entries. Using the standard approach to parse the file into python we will end up with columns of string objects, which don't work well to graph them. 
+However, for our purposes we will have to do something about the quotes surrounding the value entries. Using the standard approach to parse the file into python we will end up with columns of string objects, which don't work well to graph them. 
 
 ```python
 perfmonfile="../vis-part2/perfmon.txt"
@@ -106,5 +106,52 @@ which will give us the png in our current working directory.
 
 # Advanced output
 
-As a little extra exercise we'll have a look at [Bokeh](http://bokeh.pydata.org/en/latest/). One of the manu nice features bokeh is adding to our toolbox, is the ability to output our graphs as an interactive html file. Interactive in this case means, we can scroll and zoom in our data. Add the ability to link graphs together and you can easily create interactive renderings of pbuttons data (or other). These are especially nice, because they run in any modern  browser and can easily distributed to multiple people.
+As a little extra exercise we'll have a look at [Bokeh](http://bokeh.pydata.org/en/latest/). One of the manu nice features bokeh is adding to our toolbox, is the ability to output our graphs as an interactive html file. Interactive in this case means, we can scroll and zoom in our data. Add the ability to link graphs together and you can easily create interactive renderings of pbuttons data (or other). These are especially nice, because they run in any modern browser and can easily distributed to multiple people.
+
+For now we're aiming to just add two graphs to our output. We would like to get *Glorefs* and privileged time from perfom into one page.
+
+For that we'll first need to import bokeh:
+
+```python
+from bokeh.plotting import *
+```
+
+We'll define a couple of properties and labels as well as the size for each plot. Afterwards we'll just plot the data objects we had collected earlier and we're already done.
+
+Note the commented out *output_notebook()*, this would render the output directly in our jupyter notebook. We're using *output_file* as we'd like to have a file in the end we can distribute.
+
+```python
+output_file("mgstat.html")
+#output_notebook()
+TOOLS="pan,box_zoom,reset,save"
+
+left = figure(tools=TOOLS,x_axis_type='datetime',
+    title="Glorefs",width=600, height=350,
+   x_axis_label='time'
+)
+right=figure(tools=TOOLS,x_axis_type='datetime',
+    title="PTime",width=600, height=350,
+   x_axis_label='time',x_range=left.x_range
+)
+left.line(data.index,data.Glorefs,legend="Glorefs",line_width=1)
+right.line(perfmon.index,pd.to_numeric(perfmon[perfmon.columns[91]],errors='coerce'),legend="privileged time",line_width=1)
+p=gridplot([[left,right]])
+show(p)
+```
+
+The key ingredient here is the linking of the ranges of our two graphs with *x_range=left.x_range*. This will update the right window with our selection/zoom/move from the left one (and vice versa).
+
+The TOOLS list is just the list of tools we'd like to have in our resulting display. Using *gridplot* let's us put the two graphs next to each other:
+
+![mgstat-bokeh](mgstat-bokeh.png)
+
+You can also have a look at the resulting [html](mgstat.html).
+
+
+# Conclusion
+
+In this session we explored pulling in data from different sources and rendering it into the same graph. We are also handling data with different sampling frequency (bet you didn't notice;) ). Bokeh gives us a powerful tool to create easily distributible interactive views for our graphs. 
+For the next few sessions we'll explore more things to plot: csp.log, apache/iis access logs, cconsole.log events. If you have any suggestion for some data you'd like to see handled with python, please feel free to comment.
+
+Share your experiences! This is very much intended as an interactive journey!
 
