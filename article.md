@@ -106,9 +106,9 @@ which will give us the png in our current working directory.
 
 # Advanced output
 
-As a little extra exercise we'll have a look at [Bokeh](http://bokeh.pydata.org/en/latest/). One of the manu nice features bokeh is adding to our toolbox, is the ability to output our graphs as an interactive html file. Interactive in this case means, we can scroll and zoom in our data. Add the ability to link graphs together and you can easily create interactive renderings of pbuttons data (or other). These are especially nice, because they run in any modern browser and can easily distributed to multiple people.
+As a little extra exercise we'll have a look at [Bokeh](http://bokeh.pydata.org/en/latest/). One of the many nice features bokeh is adding to our toolbox, is the ability to output our graphs as an interactive html file. Interactive in this case means, we can scroll and zoom in our data. Add the ability to link graphs together and you can easily create interactive renderings of pbuttons data (or other). These are especially nice, because they run in any modern browser and can easily distributed to multiple people.
 
-For now we're aiming to just add two graphs to our output. We would like to get *Glorefs* and privileged time from perfom into one page.
+For now, we're aiming to just add two graphs to our output. We would like to get *Glorefs* and privileged time from perfom into one page.
 
 For that we'll first need to import bokeh:
 
@@ -150,8 +150,10 @@ You can also have a look at the resulting [html](mgstat.html).
 
 # Conclusion
 
-In this session we explored pulling in data from different sources and rendering it into the same graph. We are also handling data with different sampling frequency (bet you didn't notice;) ). Bokeh gives us a powerful tool to create easily distributible interactive views for our graphs. 
+In this session we explored pulling in data from different sources and rendering it into the same graph. We are also handling data with different sampling frequency (bet you didn't notice;) ). Bokeh gives us a powerful tool to create easily distributable interactive views for our graphs. 
 For the next few sessions we'll explore more things to plot: csp.log, apache/iis access logs, cconsole.log events. If you have any suggestion for some data you'd like to see handled with python, please feel free to comment.
 
 Share your experiences! This is very much intended as an interactive journey!
+
+You can find all files for this article on [here](https://github.com/kazamatzuri/vis-part2/)
 
